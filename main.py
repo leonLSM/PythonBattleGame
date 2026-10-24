@@ -28,7 +28,7 @@ class Weapon:  # Class containing the basic stats of each weapon
 
 
 def dodge(agility, accuracy):
-    return random.randrange(1, _maxRNG) <= agility or random.randrange(1, _maxRNG) <= accuracy
+    return (random.randrange(1, _maxRNG) <= agility) and (random.randrange(1, _maxRNG) <= accuracy)
 
 
 class Energy(Weapon):  # Class for categorizing energy weapons
@@ -36,7 +36,7 @@ class Energy(Weapon):  # Class for categorizing energy weapons
         if dodge(enemy.agility, self.accuracy):
             return enemy_stat  # Returns stat unchanged
         else:
-            if enemy_stat == C_choice.armour or C_enemy.armour:
+            if enemy_stat == (C_choice.armour or C_enemy.armour):
                 return enemy_stat - (self.damage + _dBonus)  # Returns damaged stat
             else:
                 return enemy_stat - (self.damage - _dBonus)
@@ -47,7 +47,7 @@ class Ballistic(Weapon):  # Class for categorizing ballistic weapons
         if dodge(enemy.agility, self.accuracy):
             return enemy_stat
         else:
-            if enemy_stat == C_choice.health or C_enemy.health:
+            if enemy_stat == (C_choice.health or C_enemy.health):
                 return enemy_stat - (self.damage + _dBonus)
             else:
                 return enemy_stat - (self.damage - _dBonus)
@@ -97,16 +97,16 @@ w = {"laser pistol": Energy(30, 10, 1),  # Dictionary containing all weapons
      "laser shotgun": Energy(60, 5, 3),
      "laser machine gun": Energy(85, 3, 4),
      "laser cannon": Energy(100, 8, 5),
-     "pistol": Energy(30, 10, 1),
-     "rifle": Energy(45, 7, 2),
-     "shotgun": Energy(60, 5, 3),
-     "machine gun": Energy(85, 3, 4),
-     ".50 cal sniper": Energy(100, 8, 5),
-     "knife": Energy(20, 15, 1),
-     "axe": Energy(30, 15, 2),
-     "katana": Energy(50, 15, 3),
-     "great sword": Energy(70, 15, 4),
-     "gravity hammer": Energy(100, 15, 5)}
+     "pistol": Ballistic(30, 10, 1),
+     "rifle": Ballistic(45, 7, 2),
+     "shotgun": Ballistic(60, 5, 3),
+     "machine gun": Ballistic(85, 3, 4),
+     ".50 cal sniper": Ballistic(100, 8, 5),
+     "knife": Melee(20, 15, 1),
+     "axe": Melee(30, 15, 2),
+     "katana": Melee(50, 15, 3),
+     "great sword": Melee(70, 15, 4),
+     "gravity hammer": Melee(100, 15, 5)}
 
 #  Battle Code
 output_chars(c)
